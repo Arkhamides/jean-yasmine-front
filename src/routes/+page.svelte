@@ -4,6 +4,14 @@
   // List all your project images
   const images = ["/projects/architecture.jpg", "/projects/beaufort.jpg"];
 
+  const description = [
+    { region: "World", description: "Clean architecture picture" },
+    {
+      region: "Nabatieh Governorate, Southern Lebanon",
+      description: "Belfort Castle is a crusader fortress  ",
+    },
+  ];
+
   let current = 0;
 
   onMount(() => {
@@ -16,7 +24,7 @@
 </script>
 
 <svelte:head>
-  <title>Jean Yasmine</title>
+  <title>ERA Architecture</title>
 </svelte:head>
 
 <div
@@ -38,7 +46,7 @@
   <h1
     class="text-6xl md:text-8xl font-light tracking-tight leading-[1.05] mb-20"
   >
-    The importance of heritage.
+    The Importance of Heritage
   </h1>
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
@@ -63,12 +71,11 @@
   <!-- Section title -->
   <div class="mb-16">
     <h2 class="text-2xl md:text-3xl font-light tracking-wide mb-2">Projects</h2>
-
     <div class="h-[2px] w-full bg-black"></div>
   </div>
 
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-    {#each images as img}
+    {#each images as img, index}
       <div class="relative group overflow-hidden">
         <!-- Image -->
         <img
@@ -76,13 +83,20 @@
           alt={img}
           class="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-105"
         />
-        <!-- Hover overlay -->
+        <!-- Overlay -->
         <div
           class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
         >
-          <span class="text-white text-lg tracking-wide">
-            Your title here!</span
-          >
+          <div class="text-white text-left space-y-1 tracking-wide">
+            <div class="text-base">
+              <span class="font-semibold">Region:</span>
+              {description[index].region}
+            </div>
+            <div class="text-base">
+              <span class="font-semibold">Description:</span>
+              {description[index].description}
+            </div>
+          </div>
         </div>
       </div>
     {/each}

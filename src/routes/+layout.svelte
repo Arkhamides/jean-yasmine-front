@@ -19,7 +19,7 @@
     <footer class="mt-auto shadow bg-black">
       <div class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center">
         <span class="text-sm text-white sm:text-center">
-          © 2025 <a href="/" class="hover:underline">Jean Yasmine™</a>  All Rights Reserved.
+          © 2025 <a href="/" class="hover:underline">ERA Heritage™</a>   All Rights Reserved.
         </span>
       </div>
     </footer>

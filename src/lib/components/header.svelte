@@ -9,7 +9,7 @@
     class="max-w-screen-xl mx-auto flex items-center justify-between py-6 px-4"
   >
     <a href="/" class="text-xl tracking-widest font-semibold">
-      JEAN YASMINE HERITAGE
+      ERA HERITAGE
     </a>
 
     <nav class="flex items-center gap-8 text-sm">
