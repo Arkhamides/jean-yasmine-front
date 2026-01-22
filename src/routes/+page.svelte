@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount, tick } from "svelte";
+  import { onMount } from "svelte";
 
   // List all your project images
   const images = ["/projects/architecture.jpg", "/projects/beaufort.jpg"];
@@ -8,23 +8,43 @@
     { region: "World", description: "Clean architecture picture" },
     {
       region: "Nabatieh Governorate, Southern Lebanon",
-      description: "Belfort Castle is a crusader fortress  ",
+      description: "Belfort Castle is a crusader fortress",
     },
   ];
 
   let current = 0;
   let visible = [false, false, false];
 
+  // Reference to the paragraph block for scroll-trigger
+  let textBlock: HTMLParagraphElement | null = null;
+
   onMount(() => {
+    // Slideshow interval
     const interval = setInterval(() => {
       current = (current + 1) % images.length;
-    }, 4000); // Staggered fade-in
-    visible.forEach((_, i) => {
-      setTimeout(() => {
-        visible[i] = true;
-      }, i * 700);
-    });
-    return () => clearInterval(interval);
+    }, 4000);
+
+    // Scroll-triggered fade-in
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          visible.forEach((_, i) => {
+            setTimeout(() => {
+              visible[i] = true;
+            }, i * 700);
+          });
+          observer.disconnect(); // Trigger only once
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (textBlock) observer.observe(textBlock);
+
+    return () => {
+      clearInterval(interval);
+      observer.disconnect();
+    };
   });
 </script>
 
@@ -61,38 +81,43 @@
       class="w-full h-auto object-cover"
     />
 
-    <p class="text-xl leading-relaxed text-black/80">
+    <p bind:this={textBlock} class="text-xl leading-relaxed text-black/80">
       <span
         class="
-        transition-opacity duration-700
-        {visible[0] ? 'opacity-100' : 'opacity-0'}
-      ">Architecture is a dialogue between time and place.</span
+          transition-opacity duration-700 font-medium
+          {visible[0] ? 'opacity-100' : 'opacity-0'}
+        "
       >
-      <br /><br />
-
-      <span
-        class="
-        transition-opacity duration-[1s,15s]
-        {visible[1] ? 'opacity-100' : 'opacity-0'}
-      "
-        >To honor heritage is to acknowledge the layers that shaped us — and to
-        build with a sense of continuity, not nostalgia.</span
-      >
+        Architecture is a dialogue between time and place
+      </span>
 
       <br /><br />
 
       <span
         class="
-        transition-opacity duration-[1s,15s]
-        {visible[2] ? 'opacity-100' : 'opacity-0'}
-      ">Every project becomes a bridge between what was, and what can be.</span
+          transition-opacity duration-[1500ms] font-medium
+          {visible[1] ? 'opacity-100' : 'opacity-0'}
+        "
       >
+        To honor heritage is to acknowledge the layers that shaped us — and to
+        build with a sense of continuity, not nostalgia
+      </span>
+
+      <br /><br />
+
+      <span
+        class="
+          transition-opacity duration-[1500ms] font-medium
+          {visible[2] ? 'opacity-100' : 'opacity-0'}
+        "
+      >
+        Every project becomes a bridge between what was, and what can be.
+      </span>
     </p>
   </div>
 </section>
 
 <section class="max-w-screen-xl mx-auto px-4 py-24">
-  <!-- Section title -->
   <div class="mb-16">
     <h2 class="text-2xl md:text-3xl font-light tracking-wide mb-2">Projects</h2>
     <div class="h-[2px] w-full bg-black"></div>
@@ -101,13 +126,12 @@
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
     {#each images as img, index}
       <div class="relative group overflow-hidden">
-        <!-- Image -->
         <img
           src={img}
           alt={img}
           class="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-105"
         />
-        <!-- Overlay -->
+
         <div
           class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
         >
