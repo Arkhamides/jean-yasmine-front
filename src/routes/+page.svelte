@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from "svelte";
+  import { onMount, tick } from "svelte";
 
   // List all your project images
   const images = ["/projects/architecture.jpg", "/projects/beaufort.jpg"];
@@ -13,12 +13,17 @@
   ];
 
   let current = 0;
+  let visible = [false, false, false];
 
   onMount(() => {
     const interval = setInterval(() => {
       current = (current + 1) % images.length;
-    }, 4000); // 4 seconds per slide
-
+    }, 4000); // Staggered fade-in
+    visible.forEach((_, i) => {
+      setTimeout(() => {
+        visible[i] = true;
+      }, i * 700);
+    });
     return () => clearInterval(interval);
   });
 </script>
@@ -42,7 +47,7 @@
   {/each}
 </div>
 
-<section class="max-w-screen-xl mx-auto px-4 pt-32 pb-20">
+<section class="max-w-screen-xl mx-auto px-4 py-32">
   <h1
     class="text-6xl md:text-8xl font-light tracking-tight leading-[1.05] mb-20"
   >
@@ -57,12 +62,31 @@
     />
 
     <p class="text-xl leading-relaxed text-black/80">
-      Architecture is a dialogue between time and place.
+      <span
+        class="
+        transition-opacity duration-700
+        {visible[0] ? 'opacity-100' : 'opacity-0'}
+      ">Architecture is a dialogue between time and place.</span
+      >
       <br /><br />
-      To honor heritage is to acknowledge the layers that shaped us — and to build
-      with a sense of continuity, not nostalgia.
+
+      <span
+        class="
+        transition-opacity duration-[1s,15s]
+        {visible[1] ? 'opacity-100' : 'opacity-0'}
+      "
+        >To honor heritage is to acknowledge the layers that shaped us — and to
+        build with a sense of continuity, not nostalgia.</span
+      >
+
       <br /><br />
-      Every project becomes a bridge between what was, and what can be.
+
+      <span
+        class="
+        transition-opacity duration-[1s,15s]
+        {visible[2] ? 'opacity-100' : 'opacity-0'}
+      ">Every project becomes a bridge between what was, and what can be.</span
+      >
     </p>
   </div>
 </section>
