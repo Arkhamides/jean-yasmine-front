@@ -38,6 +38,6 @@
 		"iconify-icon": "^2.0.0",
 		"lucide-svelte": "^0.522.0",
 		"marked": "^16.0.0",
-		"svelte-i18n": "^4.0.0"
+		"svelte-i18n": "^3.7.1"
 	}
 }

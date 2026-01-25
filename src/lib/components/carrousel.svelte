@@ -1,5 +1,4 @@
 <script lang="ts">
-
     const projects = [
         {
             image: "/projects/architecture.jpg",
@@ -31,7 +30,7 @@
     {#each projects as p, i}
         <img
             src={p.image}
-            alt="Project image"
+            alt={p.title}
             class="absolute inset-0 w-full h-full object-cover transition-opacity duration-700
             {i === current ? 'opacity-100' : 'opacity-0'}"
         />

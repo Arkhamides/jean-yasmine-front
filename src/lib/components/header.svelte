@@ -7,10 +7,7 @@
   <div
     class="border-b border-t-8 border-t-[#3A0D0D] max-w-screen-2xl mx-auto flex items-center justify-between py-6 px-8"
   >
-    <a
-      href="/"
-      class="text-2xl tracking-[0.12em] text-[#2f2f26] uppercase"
-    >
+    <a href="/" class="text-2xl tracking-[0.12em] text-[#2f2f26] uppercase">
       Jean Yasmine
     </a>
 
@@ -34,10 +31,12 @@
 
 {#if sidebarOpen}
   <!-- Overlay -->
-  <div
-    class="fixed inset-0 bg-black/40 backdrop-blur-sm z-30"
+  <button
+    type="button"
+    class="fixed inset-0 bg-black/40 backdrop-blur-sm z-30 cursor-default"
     on:click={() => (sidebarOpen = false)}
-  ></div>
+    aria-label="open or close sidebar"
+  ></button>
 
   <!-- Sidebar -->
   <aside
